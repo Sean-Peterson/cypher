@@ -1,0 +1,55 @@
+<?php
+function cypher_menu() {
+    $items['cypher'] = array(
+        'title' => 'Cypher',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('cypher_form'),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['cypher/result'] = array(
+        'title' => "Can you decypher the code?",
+        'page callback' => 'cypher_result',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+
+function cypher_form(){
+    $form['shift']=array(
+        '#title'=>'A number, please',
+        '#type'=>'textfield',
+        '#description'=>t('This number will be used to encrypt your word'),
+        '#required'=>TRUE,
+        '#element_validate'=>array(
+            'element_validate_integer_positive',
+        ),
+    );
+    $form['direction']=array(
+        '#title'=>'Specify RIGHT or LEFT, please',
+        '#type'=>'textfield',
+        '#description'=>t('The direction will be used to encrypt your word'),
+        '#required'=>TRUE,
+        '#element_validate'=>array(
+            'element_validate_direction',
+        ),
+    );
+    $form['word']=array(
+        '#title'=>'Input a word for encryption',
+        '#type'=>'textfield',
+        '#description'=>t('This word will be encrypted with the information you provided'),
+        '#required'=>TRUE,
+    );
+    $form['submit']=array(
+        '#type'=>'submit',
+        '#value'=>'Submit',
+    );
+    return $form;
+}
+
+function element_validate_direction($element) {
+    if(strtolower($element['#value'] !=='right') && strtolower($element['#value']!=='left')){
+        form_error($element, t('Direction must be either right or left'));
+    }
+}

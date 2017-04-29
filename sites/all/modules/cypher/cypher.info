@@ -1,0 +1,5 @@
+name = Cypher
+description = An encryption module
+package = Encryption pro
+core = 7.x
+files[] = cypher.module
