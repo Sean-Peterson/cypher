@@ -88,7 +88,7 @@ function cypher_result() {
     foreach ($split_word as &$value) {
         $alph_spot = array_search($value,$alphabet);
         var_dump($alph_spot);
-        if(isset($alph_spot)){
+        if(isset($alph_spot) && $alph_spot != false){
             if ($direction == 'right') {
                 if (($alph_spot+$shift)>25) {
                     $right_shift = ($alph_spot+$shift)-26;
