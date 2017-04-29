@@ -7,7 +7,7 @@ function cypher_menu() {
         'access callback' => TRUE,
         'type' => MENU_NORMAL_ITEM,
     );
-    $items['cypher/result'] = array(
+    $items['cypher_results'] = array(
         'title' => "Can you decypher the code?",
         'page callback' => 'cypher_result',
         'access callback' => TRUE,
@@ -49,7 +49,52 @@ function cypher_form(){
 }
 
 function element_validate_direction($element) {
-    if(strtolower($element['#value'] !=='right') && strtolower($element['#value']!=='left')){
+    if(strtolower($element['#value']) !=='right' && strtolower($element['#value'])!=='left'){
         form_error($element, t('Direction must be either right or left'));
     }
+}
+
+function cypher_form_submit($form, &$form_state) {
+    $shift=$form_state['values']['shift'];
+    $direction=$form_state['values']['direction'];
+    $word=$form_state['values']['word'];
+    $_SESSION['shift']=$shift;
+    $_SESSION['direction']=$direction;
+    $_SESSION['word']=$word;
+
+    $form_state['redirect'] = 'cypher_results';
+}
+
+function cypher_result() {
+    echo'<pre>';
+    $something = '<h1>Here</h1>';
+    var_dump($_SESSION['shift']);
+    var_dump($_SESSION['direction']);
+    var_dump($_SESSION['word']);
+    var_dump(str_split($_SESSION['word']));
+    $shift=($_SESSION['shift']);
+    $direction=($_SESSION['direction']);
+    $word=($_SESSION['word']);
+    $split_word=str_split($word);
+    $alphabet=range('a','z');
+    var_dump($shift);
+    var_dump($direction);
+    var_dump($word);
+    var_dump($split_word);
+    echo'</pre>';
+    foreach ($split_word as &$value) {
+        $alph_spot = array_search($value,$alphabet);
+        var_dump($alph_spot);
+        if(isset($alph_spot)){
+            if ($direction == 'right') {
+                $value=$alphabet[$alph_spot+$shift];
+            }else{
+                $value=$alphabet[$alph_spot-$shift];
+            }
+        }
+    }
+    echo'<pre>';
+    var_dump($split_word);
+    echo'</pre>';
+    return $something;
 }
