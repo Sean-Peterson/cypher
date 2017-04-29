@@ -109,5 +109,6 @@ function cypher_result() {
     echo'<pre>';
     var_dump($split_word);
     echo'</pre>';
-    return $something;
+    $output = implode('', $split_word);
+    return '<h1>' . $output . '</h1>';
 }
