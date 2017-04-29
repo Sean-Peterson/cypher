@@ -82,6 +82,9 @@ function cypher_result() {
     var_dump($word);
     var_dump($split_word);
     echo'</pre>';
+    while($shift>25){
+        $shift = $shift-26;
+    }
     foreach ($split_word as &$value) {
         $alph_spot = array_search($value,$alphabet);
         var_dump($alph_spot);
