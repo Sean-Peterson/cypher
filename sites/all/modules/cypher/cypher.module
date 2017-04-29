@@ -90,7 +90,12 @@ function cypher_result() {
         var_dump($alph_spot);
         if(isset($alph_spot)){
             if ($direction == 'right') {
-                $value=$alphabet[$alph_spot+$shift];
+                if (($alph_spot+$shift)>25) {
+                    $new_shift = ($alph_spot+$shift)-26;
+                    $value=$alphabet[$new_shift];
+                }else{
+                    $value=$alphabet[$alph_spot+$shift];
+                }
             }else{
                 $value=$alphabet[$alph_spot-$shift];
             }
